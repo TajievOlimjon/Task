@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Persistence.Data;
 using Services.MapperServices;
+using Web.HalperMethods;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ builder.Services.AddDbContext<DataContext>(options => options.UseNpgsql(connecti
 
 builder.Services.AddAutoMapper(typeof(EntitiesMapper));
 
+builder.Services.AddedAutorizeService(builder);
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
  builder.Services.AddSwaggerGen(c =>
@@ -25,7 +28,7 @@ builder.Services.AddEndpointsApiExplorer();
              Description = "Sampme API Services.",
              Contact = new OpenApiContact
              {
-                 Name = "Nurullo Sulaymonov."
+                 Name = "Tajiev Olimjon."
              },
          });
          c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
