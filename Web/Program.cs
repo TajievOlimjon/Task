@@ -1,17 +1,26 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Persistence.Data;
+using Services.AccountServices;
+using Services.EntitiesServices;
+using Services.EntitiesServices.UserDocumentService;
+using Services.EntitiesServices.UserServices;
 using Services.MapperServices;
 using Web.HalperMethods;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddControllers();
 var connection = builder.Configuration.GetConnectionString("DefaultConecction");
 builder.Services.AddDbContext<DataContext>(options => options.UseNpgsql(connection));
 
+// Add services to the container.
+
+builder.Services.AddControllers();
+
+builder.Services.AddScoped<IWalletService,WalletService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<IUserDocumentService ,UserDocumentService>();
 
 builder.Services.AddAutoMapper(typeof(EntitiesMapper));
 

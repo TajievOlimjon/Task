@@ -8,11 +8,17 @@ namespace Domain.Entities
 {
     public class UserDocument
     {
-        public Guid Id { get; set; }
-        public string Gender { get; set; }
+        public int Id { get; set; }
+        public Gender Gender { get; set; }
         public DateTime BirthDate { get; set; }
         public string PassportNumber { get; set; }
         public string INN { get; set; }
 
+    }
+
+    public enum Gender
+    {
+        Male,
+        Fimale
     }
 }

@@ -14,6 +14,8 @@ namespace Services.MapperServices
         public EntitiesMapper()
         {
             CreateMap<WalletDto, Wallet>();
+            CreateMap<TransactionDto, Transaction>();
+            CreateMap<UserDto, User>();
         }
     }
 }

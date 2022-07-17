@@ -10,7 +10,7 @@ namespace Services.EntitiesServices
     public  interface IWalletService
     {
         Task<List<WalletDto>> GetWallets();
-        Task<WalletDto> GetWalletById(Guid Id);
+        Task<WalletDto> GetWalletById(int Id);
         Task<int> Insert(WalletDto wallet);
     }
 }

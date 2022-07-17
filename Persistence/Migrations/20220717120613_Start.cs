@@ -53,8 +53,9 @@ namespace Persistence.Migrations
                 name: "UserDocuments",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Gender = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Gender = table.Column<int>(type: "integer", nullable: false),
                     BirthDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     PassportNumber = table.Column<string>(type: "text", nullable: false),
                     INN = table.Column<string>(type: "text", nullable: false)
@@ -174,19 +175,19 @@ namespace Persistence.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FullName = table.Column<string>(type: "text", nullable: false),
                     Identified = table.Column<bool>(type: "boolean", nullable: false),
                     PhoneNumber = table.Column<string>(type: "text", nullable: false),
-                    UserDocument = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserDocumentsId = table.Column<Guid>(type: "uuid", nullable: false)
+                    UserDocumentId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_UserDocuments_UserDocumentsId",
-                        column: x => x.UserDocumentsId,
+                        name: "FK_Users_UserDocuments_UserDocumentId",
+                        column: x => x.UserDocumentId,
                         principalTable: "UserDocuments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -196,10 +197,11 @@ namespace Persistence.Migrations
                 name: "Wallets",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Balance = table.Column<decimal>(type: "numeric", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false)
+                    UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -216,14 +218,24 @@ namespace Persistence.Migrations
                 name: "Transactions",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Balance = table.Column<decimal>(type: "numeric", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    WalletId = table.Column<Guid>(type: "uuid", nullable: false)
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    Amount = table.Column<decimal>(type: "numeric", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    WalletId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transactions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Transactions_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Transactions_Wallets_WalletId",
                         column: x => x.WalletId,
@@ -270,14 +282,19 @@ namespace Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Transactions_UserId",
+                table: "Transactions",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Transactions_WalletId",
                 table: "Transactions",
                 column: "WalletId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_UserDocumentsId",
+                name: "IX_Users_UserDocumentId",
                 table: "Users",
-                column: "UserDocumentsId");
+                column: "UserDocumentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Wallets_UserId",

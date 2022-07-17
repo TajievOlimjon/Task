@@ -3,6 +3,7 @@ using Domain.Entities;
 using Domain.Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
+using System.Linq;
 
 namespace Services.EntitiesServices
 {
@@ -17,11 +18,12 @@ namespace Services.EntitiesServices
             _mapper = mapper;
         }
 
-        public async Task<WalletDto> GetWalletById(Guid Id)
+        public async Task<WalletDto> GetWalletById(int Id)
         {
             var walet = await _context.Wallets
                 .Where(w => w.Id == Id)
-                .Select(w => new WalletDto{ Balance = w.Balance}).FirstOrDefaultAsync();
+                .Select(w => new WalletDto { Balance = w.Balance }).FirstOrDefaultAsync();
+             
                 if (walet == null) return new WalletDto();
                 return walet;
         }
