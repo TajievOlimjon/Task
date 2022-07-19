@@ -20,12 +20,17 @@ namespace Web.Controllers
         {
             return await _walletService.GetWalletById(Id);
         }
-        [HttpGet("GetWalletCountById")]
-        public async Task<WalletDto> GetWalletCountById(string phone)
+        [HttpGet("GetWalletBalanceByNumber")]
+        public async Task<WalletSum> GetWalletBalanceByNumber(string phone)
         {
-            return await _walletService.GetWalletCountById(phone);
+            return await _walletService.GetWalletBalanceByNumber(phone);
         }
 
+        [HttpGet("GetBalanceByNumberUser")]
+        public async Task<WalletDto> GetWalletByNumberUser(string PhoneNumber)
+        {
+            return await _walletService.GetWalletByNumberUser(PhoneNumber);
+        }
         [HttpGet("GetWallets")]
         public async Task<List<WalletDto>> GetWalletsAsync()
         {

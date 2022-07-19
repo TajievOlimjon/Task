@@ -13,4 +13,14 @@ namespace Domain.Entities.Models
         public DateTimeOffset CreateDate { get; set; }
         public string UserId { get; set; }
     }
+
+    public class WalletSum
+    {   public string? UserId { get; set; }
+        public string Username { get; set; }
+        public string Email { get; set; }
+        public string Phonenumber { get; set; }
+        public decimal Count { get; set; }
+        public decimal Sum { get; set; }
+
+    }
 }
