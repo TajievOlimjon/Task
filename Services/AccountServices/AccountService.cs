@@ -65,13 +65,13 @@ namespace Services.AccountServices
             };
         }
 
-        public async Task<IdentityResult> Register(RegisterDto register)
+        public async Task<IdentityResult> Register(Register register)
         {
             User user = new User
             {
                 UserName = register.UserName,
                 Email = register.Email,
-                UserDocumentId=register.UserDocumentId
+                PhoneNumber=register.PhoneNumber
 
             };
             var result = await _userManeger.CreateAsync(user);

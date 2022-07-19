@@ -20,7 +20,7 @@ namespace Web.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<ActionResult> Register(RegisterDto register)
+        public async Task<ActionResult> Register(Register register)
         {
             if (!ModelState.IsValid) { return BadRequest(register); }
             var user = await _accountService.Register(register);
@@ -37,30 +37,30 @@ namespace Web.Controllers
         }
        
 
-        [HttpGet("GetList_Of_Authorized_Users")]
-        public async Task<List<UserDto>> GetUsers()
-        {
-            return await _userService.GetUsers();
+        //[HttpGet("GetList_Of_Authorized_Users")]
+        //public async Task<List<UserDto>> GetUsers()
+        //{
+        //    return await _userService.GetUsers();
 
 
-        }
+        //}
 
-        [HttpGet("GetUserById")]
-        public async Task<UserDto> GetUserById(int id)
-        {
-            return await _userService.GetUserById(id);
-        }
+        //[HttpGet("GetUserById")]
+        //public async Task<UserDto> GetUserById(int id)
+        //{
+        //    return await _userService.GetUserById(id);
+        //}
 
-        [HttpPut("Update")]
-        public async Task<int> Update(UserDto dto)
-        {
-            return await _userService.Update(dto);
-        }
+        //[HttpPut("Update")]
+        //public async Task<int> Update(UserDto dto)
+        //{
+        //    return await _userService.Update(dto);
+        //}
 
-        [HttpDelete("Delete")]
-        public async Task<int> Delete(int id)
-        {
-            return await _userService.Delete(id);
-        }
+        //[HttpDelete("Delete")]
+        //public async Task<int> Delete(string id)
+        //{
+        //    return await _userService.Delete(id);
+        //}
     }
 }

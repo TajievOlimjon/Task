@@ -3,7 +3,6 @@ using Microsoft.OpenApi.Models;
 using Persistence.Data;
 using Services.AccountServices;
 using Services.EntitiesServices;
-using Services.EntitiesServices.UserDocumentService;
 using Services.EntitiesServices.UserServices;
 using Services.MapperServices;
 using Web.HalperMethods;
@@ -20,7 +19,6 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IWalletService,WalletService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<AccountService>();
-builder.Services.AddScoped<IUserDocumentService ,UserDocumentService>();
 
 builder.Services.AddAutoMapper(typeof(EntitiesMapper));
 

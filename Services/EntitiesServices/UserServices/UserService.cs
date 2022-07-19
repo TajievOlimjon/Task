@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Entities;
 using Domain.Entities.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 
@@ -9,17 +10,20 @@ namespace Services.EntitiesServices.UserServices
     public  class UserService:IUserService
     {
         private readonly DataContext _context;
+        private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
 
-        public UserService(DataContext context,IMapper mapper)
+        public UserService(IMapper mapper, DataContext context, UserManager<User> userManager)
         {
             _context = context;
+           _userManager = userManager;
             _mapper = mapper;
+            
         }
 
-        public async Task<int> Delete(int id)
+        public async Task<int> Delete(string id)
         {
-            var user= await _context.Users.FindAsync(id);
+            var user= await _context.Users.FirstOrDefaultAsync(user=>user.Id==id);
             if(user==null) return 0;
             _context.Users.Remove(user);
             return await _context.SaveChangesAsync();
@@ -28,15 +32,14 @@ namespace Services.EntitiesServices.UserServices
         public async Task<UserDto> GetUserById(int id)
         {
             var user = await (from u in _context.Users
-                              where u.Id==id
+                           //   where u.Id==id
                               select new UserDto
                               {
-                                  Id=u.Id,
+                                 // Id=u.Id,
                                   UserName=u.UserName,
                                   Email=u.Email,
                                   Identified=u.Identified,
-                                  PhoneNumber=u.PhoneNumber,
-                                  UserDocumentId=u.UserDocumentId,
+                                  PhoneNumber=u.PhoneNumber
                                   
 
                               }).FirstOrDefaultAsync();
@@ -49,12 +52,11 @@ namespace Services.EntitiesServices.UserServices
            return   await( from u in _context.Users
                              select new UserDto
                              {
-                                 Id = u.Id,
+                                 //Id = u.Id,
                                  UserName = u.UserName,
                                  Email = u.Email,
                                  Identified = u.Identified,
-                                 PhoneNumber = u.PhoneNumber,
-                                 UserDocumentId = u.UserDocumentId,
+                                 PhoneNumber = u.PhoneNumber
 
                              }).ToListAsync();
             
@@ -75,7 +77,6 @@ namespace Services.EntitiesServices.UserServices
             user.Email = userDto.Email;
             user.Identified = userDto.Identified;
             user.PhoneNumber = userDto.PhoneNumber;
-            user.UserDocumentId = userDto.UserDocumentId;
             return await _context.SaveChangesAsync();
         }
     }

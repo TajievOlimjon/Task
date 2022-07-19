@@ -13,6 +13,5 @@ namespace Domain.Entities.Models
         public string Email { get; set; }
         public bool Identified { get; set; }
         public string PhoneNumber { get; set; }
-        public int UserDocumentId { get; set; }
     }
 }

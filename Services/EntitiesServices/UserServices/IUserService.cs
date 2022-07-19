@@ -14,7 +14,7 @@ namespace Services.EntitiesServices.UserServices
         Task<UserDto> GetUserById(int id);
         Task<int> Insert(UserDto userDto);
         Task<int> Update(UserDto userDto);
-        Task<int> Delete(int id);
+        Task<int> Delete(string id);
 
     }
 }
