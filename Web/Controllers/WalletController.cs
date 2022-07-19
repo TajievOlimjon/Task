@@ -26,6 +26,11 @@ namespace Web.Controllers
             return await _walletService.GetWalletCountById(phone);
         }
 
+        [HttpGet("GetBalanceByNumberUser")]
+        public async Task<WalletDto> GetWalletByNumberUser(string PhoneNumber)
+        {
+            return await _walletService.GetWalletByNumberUser(PhoneNumber);
+        }
         [HttpGet("GetWallets")]
         public async Task<List<WalletDto>> GetWalletsAsync()
         {
